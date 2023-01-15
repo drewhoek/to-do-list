@@ -1,11 +1,11 @@
-$(function() {
+$(function () {
     console.log('jq and js');
     $('#equals-button').on('click', handleSubmit);
     $('#add-button').on('click', add);
     $('#subtract-button').on('click', subtract);
     $('#multiply-button').on('click', multiply);
     $('#divide-button').on('click', divide);
-
+    $('#equals-button').on('click', getAnswer);
 });
 
 let currentOperator = "";
@@ -27,10 +27,23 @@ function handleSubmit() {
         method: 'POST',
         url: '/equals',
         data: newEquationObject
-    }).then(function(res) {
+    }).then(function (res) {
         console.log(res);
     });
 }
+
+function getAnswer() {
+    $.ajax({
+        type: 'GET',
+        url: '/answer'
+    }).then(function (res) {
+        // change span to show answer
+        console.log(res);
+        $('#answer').text(`${res}`);
+    });
+};
+
+
 
 function add() {
     currentOperator = "+";
