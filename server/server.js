@@ -11,8 +11,29 @@ let history = [];
 app.post('/equals', (req, res) => {
     console.log(`Incoming POST /equals: `, req.body);
     history.push(req.body);
+    console.log(calculate(req.body));
     res.sendStatus(201);
 });
+
+
+
+
+
+function calculate(equationObject) {
+    let ans = 0;
+    if (equationObject.operator === '+') {
+        ans = equationObject.firstNum + equationObject.secondNum;
+    } else if (equationObject.operator === '-') {
+        ans = equationObject.firstNum - equationObject.secondNum;
+    } else if (equationObject.operator === '*') {
+        ans = equationObject.firstNum * equationObject.secondNum;
+    } else if (equationObject.operator === '/') {
+        ans = equationObject.firstNum / equationObject.secondNum;
+    } else {
+        console.log('ERROR');
+    }
+    return ans;
+}
 
 
 
