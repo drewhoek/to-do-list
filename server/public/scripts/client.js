@@ -6,9 +6,11 @@ $(function () {
     $('#multiply-button').on('click', multiply);
     $('#divide-button').on('click', divide);
     $('#equals-button').on('click', getAnswer);
+    $('#equals-button').on('click', getHistory);
+    $('#clear-button').on('click', clear);
 });
 
-let currentOperator = "";
+let currentOperator = '';
 
 function handleSubmit() {
     // package inputs into object to be sent off to server
@@ -16,11 +18,8 @@ function handleSubmit() {
         firstNum: $('#first-num-input').val(),
         operator: currentOperator,
         secondNum: $('#second-num-input').val(),
+        ans: getAnswer(),
     };
-
-    // clear inputs
-    $('#first-num-input').val('');
-    $('#second-num-input').val('');
 
     // ajax POST to send info object to server
     $.ajax({
@@ -43,7 +42,29 @@ function getAnswer() {
     });
 };
 
+function getHistory() {
+    $.ajax({
+        type: 'GET',
+        url: '/history'
+    }).then(function (res) {
+        console.log(res);
+        $('#history-list').empty();
+        for (let i = 0; i < res.length; i++) {
+            const equation = res[i];
+            $('#history-list').append(`
+            <li>${equation.firstNum} ${equation.operator} ${equation.secondNum} = ${equation.ans}</li>
+        `);
+        }
+    });
+}
 
+function clear() {
+    // clear inputs
+    $('#first-num-input').val('');
+    $('#second-num-input').val('');
+    // clear current operator
+    currentOperator = '';
+}
 
 function add() {
     currentOperator = "+";

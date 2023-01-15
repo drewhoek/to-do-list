@@ -12,16 +12,16 @@ let ans = 0;
 app.post('/equals', (req, res) => {
     console.log(`Incoming POST /equals: `, req.body);
 
-    // Define req.body varibles
+    // Define req.body variables
     let num1 = Number(req.body.firstNum);
     let num2 = Number(req.body.secondNum);
     let operator = req.body.operator;
-
+    let ans = calculate(num1, num2, operator);
     // Push object to history array
     history.push(req.body);
 
     // Log answer to equation
-    console.log('Answer is:', calculate(num1, num2, operator));
+    console.log('Answer is:', ans);
 
     // Send success POST
     res.sendStatus(201);
@@ -30,6 +30,11 @@ app.post('/equals', (req, res) => {
 app.get('/answer', (req, res) => {
     console.log(`Incoming GET /answer`);
     res.send(ans.toString());
+});
+
+app.get('/history', (req, res) => {
+    console.log(`Incoming GET /history`);
+    res.send(history).status(201);
 });
 
 function calculate(num1, num2, operator) {
