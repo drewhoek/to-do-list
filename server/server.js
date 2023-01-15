@@ -7,28 +7,27 @@ app.use(express.static('server/public'));
 app.use(express.urlencoded({ extended: true }));
 
 let history = [];
+let ans = 0;
 
 app.post('/equals', (req, res) => {
     console.log(`Incoming POST /equals: `, req.body);
+    let num1 = Number(req.body.firstNum);
+    let num2 = Number(req.body.secondNum);
+    let operator = req.body.operator;
     history.push(req.body);
-    console.log(calculate(req.body));
+    console.log('Answer is:', calculate(num1, num2, operator));
     res.sendStatus(201);
 });
 
-
-
-
-
-function calculate(equationObject) {
-    let ans = 0;
-    if (equationObject.operator === '+') {
-        ans = equationObject.firstNum + equationObject.secondNum;
-    } else if (equationObject.operator === '-') {
-        ans = equationObject.firstNum - equationObject.secondNum;
-    } else if (equationObject.operator === '*') {
-        ans = equationObject.firstNum * equationObject.secondNum;
-    } else if (equationObject.operator === '/') {
-        ans = equationObject.firstNum / equationObject.secondNum;
+function calculate(num1, num2, operator) {
+    if (operator === '+') {
+        ans = num1 + num2;
+    } else if (operator === '-') {
+        ans = num1 - num2;
+    } else if (operator === '*') {
+        ans = num1 * num2;
+    } else if (operator === '/') {
+        ans = num1 / num2;
     } else {
         console.log('ERROR');
     }
