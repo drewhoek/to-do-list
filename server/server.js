@@ -13,17 +13,21 @@ app.post('/equals', (req, res) => {
     console.log(`Incoming POST /equals: `, req.body);
 
     // Define req.body variables
-    let num1 = Number(req.body.firstNum);
-    let num2 = Number(req.body.secondNum);
-    let operator = req.body.operator;
-    let ans = calculate(num1, num2, operator);
+    let newEquationObject2 = {
+        num1: Number(req.body.firstNum),
+        num2: Number(req.body.secondNum),
+        operator: req.body.operator,
+        ans: calculate(Number(req.body.firstNum), Number(req.body.secondNum), req.body.operator),
+    }
     // Push object to history array
-    history.push(req.body);
+    history.push(newEquationObject2);
+
+    console.log(history);
 
     // Log answer to equation
     console.log('Answer is:', ans);
 
-    // Send success POST
+    // Send successful POST
     res.sendStatus(201);
 });
 

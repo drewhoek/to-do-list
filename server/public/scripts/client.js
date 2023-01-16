@@ -11,6 +11,7 @@ $(function () {
 });
 
 let currentOperator = '';
+let result = '';
 
 function handleSubmit() {
     // package inputs into object to be sent off to server
@@ -18,7 +19,7 @@ function handleSubmit() {
         firstNum: $('#first-num-input').val(),
         operator: currentOperator,
         secondNum: $('#second-num-input').val(),
-        ans: getAnswer(),
+        ans: result,
     };
 
     // ajax POST to send info object to server
@@ -38,6 +39,7 @@ function getAnswer() {
     }).then(function (res) {
         // change span to show answer
         console.log(res);
+        result = res;
         $('#answer').text(`${res}`);
     });
 };
@@ -52,7 +54,7 @@ function getHistory() {
         for (let i = 0; i < res.length; i++) {
             const equation = res[i];
             $('#history-list').append(`
-            <li>${equation.firstNum} ${equation.operator} ${equation.secondNum} = ${equation.ans}</li>
+            <li>${equation.num1} ${equation.operator} ${equation.num2} = ${equation.ans}</li>
         `);
         }
     });
