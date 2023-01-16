@@ -15,6 +15,7 @@ This project is a calculator that takes inputs from the client, packages them in
 - HTML/CSS
 - Javascript
     - Jquery
+        -  Ajax
     - Node
 - Express
 - Tested with Postman
